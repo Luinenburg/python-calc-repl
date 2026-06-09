@@ -66,8 +66,11 @@ def operate(sorted_symbols):
         operation = operations[index]
         if "*/".find(operation) > -1:
             result = process_operation(numbers[index], operation, numbers[index+1])
-            if result in Error:
-                return result
+            try:
+                if result in Error:
+                    return result
+            except TypeError:
+                pass
             numbers[index] = result
             numbers.pop(index+1)
             operations.pop(index)
