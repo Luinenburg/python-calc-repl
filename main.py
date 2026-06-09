@@ -76,8 +76,6 @@ def operate(sorted_symbols):
 
     index = 0
     while operations.count("+") > 0 or operations.count("-") > 0:
-        print(numbers)
-        print(operations)
         if (index >= len(operations)): index = 0
         operation = operations[index]
         if "+-".find(operation) > -1:
@@ -94,16 +92,23 @@ def operate(sorted_symbols):
 
 
 def rep():
-    return    
+    eq = input("Input any four-function equation in a formatting similar to: 2+3.1/4-100*2\n> ")
+    result = operate(unmix(eq))
+    match result:
+        case Error.DIV_ZERO:
+            print("Do not attempt to divide by zero.")
+        case Error.UNS_VAL:
+            print("A value you attempted to use was invalid. Make sure to only use numbers (1, 6.7)")
+        case Error.UNS_OP:
+            print("An operation you entered is not supported. Please only use the basic four functions (*, /, +, -)")
+        case Error.BAD_EQ:
+            print("Some part of your equation formatting was incorrect. Make sure the equation begins and ends with a number.")
+        case _:
+            print(result)
 
 def main():
-    if (len(sys.argv) > 2):
-        print("Error: Too many arguments. Ensure equation is surrounded in quotes")
-        return
-    if (len(sys.argv) < 2):
-        print("Error: Too few arguments. Did you provide an equation?")
-        return
-    print(operate(unmix(sys.argv[1])))
+    while True:
+        rep()
 
 if __name__=="__main__":
     main()
